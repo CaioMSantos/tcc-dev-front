@@ -1,0 +1,221 @@
+<p-toast [showTransformOptions]="'translateX(100%)'" position="top-right" key="bc" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="p-flex p-flex-column" style="flex: 1">
+            <div class="p-text-center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                <h4>{{message.summary}}</h4>
+                <p>{{message.detail}}</p>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+    <ng-container *ngIf="control && (control.hasError(validation)) && (control.dirty || control.touched)">
+        <div class="fv-plugins-message-container">
+            <div class="fv-help-block">
+                {{ message }}
+            </div>
+        </div>
+    </ng-container>
+</ng-template>
+
+<div class="modal-header">
+    <h3 class="modal-title">Plano de Ação</h3>
+</div>
+<div class="card-body mt-1">
+
+    <div class="card-body mt-2">
+        <form novalidate="novalidate" [formGroup]="cadForm">
+            <p-tabView>
+                <p-tabPanel header="Informações Cenário">
+                    <div class="form-localizacao2">
+                        <label><span class="campo-numero">1</span>Nome do cenário:</label>
+                        <input type="text" formControlName="nome_cenario" maxlength="150">
+                        <div *ngIf="cadForm.get('nome_cenario')?.touched && cadForm.get('nome_cenario')?.invalid"
+                            style="color: red;">
+                            Preencha o nome do cenário (até 150 caracteres)
+                        </div>
+                        <label><span class="campo-numero">2</span>Descrição do cenário:</label>
+                        <textarea formControlName="descricao_cenario" maxlength="1500"></textarea>
+                        <small>até 1500 caracteres</small>
+                        <div *ngIf="cadForm.get('descricao_cenario')?.touched && cadForm.get('descricao_cenario')?.invalid"
+                            style="color: red;">
+                            Descrição obrigatória (até 1500 caracteres)
+                        </div>
+
+                        <label><span class="campo-numero">3</span>Resumo por histórico:</label>
+                        <textarea formControlName="resumo_historico" maxlength="500"></textarea>
+                        <small>até 500 caracteres</small>
+                        <div *ngIf="cadForm.get('resumo_historico')?.touched && cadForm.get('resumo_historico')?.invalid"
+                            style="color: red;">
+                            Resumo obrigatório (até 500 caracteres)
+                        </div>
+
+                        <label><span class="campo-numero">4</span>Componentes críticos:</label>
+                        <textarea formControlName="componentes_criticos" maxlength="440"></textarea>
+                        <small>até 440 caracteres</small>
+                        <div *ngIf="cadForm.get('componentes_criticos')?.touched && cadForm.get('componentes_criticos')?.invalid"
+                            style="color: red;">
+                            Campo obrigatório (até 440 caracteres)
+                        </div>
+
+                        <label><span class="campo-numero">5</span>Monitoramento, alerta e
+                            alarme:</label>
+                        <textarea formControlName="monitoramento" maxlength="440"></textarea>
+                        <small>até 440 caracteres</small>
+                        <div *ngIf="cadForm.get('monitoramento')?.touched && cadForm.get('monitoramento')?.invalid"
+                            style="color: red;">
+                            Campo obrigatório (até 440 caracteres)
+                        </div>
+
+
+                        <label class="text-dark-75 font-weight-bolder" for="grau">
+                            <strong>Grau de Risco</strong>
+                        </label>
+                        <p-dropdown [options]="graus" [showClear]="false" [style]="{'width':'100%'}"
+                            formControlName="grau_risco"></p-dropdown>
+                    </div>
+                </p-tabPanel>
+                <p-tabPanel header="Localização Cenário">
+                    <div class="container-principal">
+                        <div class="form-localizacao">
+                            <div class="form-group">
+                                <label for="municipio">Município</label>
+                                <input type="text" id="municipio" formControlName="municipio" required
+                                    placeholder="Ex: Cariacica">
+                            </div>
+                            <div class="form-group">
+                                <label for="bairro">Bairro</label>
+                                <input type="text" id="bairro" formControlName="bairro" required
+                                    placeholder="Ex: Alto da Boa Vista">
+                            </div>
+                            <div class="form-group">
+                                <label for="endereco">Endereço / Ponto de Referência</label>
+                                <input type="text" id="endereco" formControlName="endereco"
+                                    placeholder="Ex: Rua Projetada, próximo ao número 123">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="cep">CEP</label>
+                                    <input type="text" id="cep" formControlName="cep" placeholder="Ex: 29120-000">
+                                </div>
+                                <div class="form-group">
+                                    <label for="area_setor">Área/Setor</label>
+                                    <input type="text" id="area_setor" formControlName="area_setor"
+                                        placeholder="Ex: Setor 3, Zona Leste">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="latitude">Latitude</label>
+                                    <input type="number" step="any" id="latitude" formControlName="latitude"
+                                        placeholder="Ex: -20.265">
+                                </div>
+                                <div class="form-group">
+                                    <label for="longitude">Longitude</label>
+                                    <input type="number" step="any" id="longitude" formControlName="longitude"
+                                        placeholder="Ex: -40.420">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="logo-lateral">
+                            <img alt="Logo" style="width: 100%; height: 100%;"
+                                src="assets/media/logos/LogoSiscon.png" />
+                        </div>
+                    </div>
+                </p-tabPanel>
+                <p-tabPanel header="Plano de Ação">
+                    <div class="form-localizacao2">
+                        <label><span class="campo-numero">1</span>Título do Plano</label>
+                        <input type="text" formControlName="titulo" maxlength="150">
+                        <div *ngIf="cadForm.get('titulo')?.touched && cadForm.get('titulo')?.invalid"
+                            style="color: red;">
+                            Preencha o título do plano (até 150 caracteres)
+                        </div>
+
+                        <label><span class="campo-numero">2</span>Objetivo</label>
+                        <textarea formControlName="objetivo" maxlength="1500"></textarea>
+                        <small>até 1500 caracteres</small>
+                        <div *ngIf="cadForm.get('objetivo')?.touched && cadForm.get('objetivo')?.invalid"
+                            style="color: red;">
+                            Preencha o objetivo (até 1500 caracteres)
+                        </div>
+
+                        <label><span class="campo-numero">3</span>Etapa Preventiva</label>
+                        <textarea formControlName="etapa_preventiva" maxlength="1000"></textarea>
+                        <small>até 1000 caracteres</small>
+
+                        <label><span class="campo-numero">4</span>Etapa Mitigação</label>
+                        <textarea formControlName="etapa_mitigacao" maxlength="1000"></textarea>
+                        <small>até 1000 caracteres</small>
+
+                        <label><span class="campo-numero">5</span>Etapa Preparação</label>
+                        <textarea formControlName="etapa_preparacao" maxlength="1000"></textarea>
+                        <small>até 1000 caracteres</small>
+
+                        <label><span class="campo-numero">6</span>Etapa Resposta</label>
+                        <textarea formControlName="etapa_resposta" maxlength="1000"></textarea>
+                        <small>até 1000 caracteres</small>
+
+                        <label><span class="campo-numero">7</span>Etapa Recuperação</label>
+                        <textarea formControlName="etapa_recuperacao" maxlength="1000"></textarea>
+                        <small>até 1000 caracteres</small>
+
+                        <label><span class="campo-numero">8</span>Responsáveis</label>
+                        <input type="text" formControlName="responsaveis" maxlength="255">
+
+                        <label><span class="campo-numero">9</span>Recursos Necessários</label>
+                        <textarea formControlName="recursos_necessarios" maxlength="1000"></textarea>
+                        <small>até 1000 caracteres</small>
+
+                        <!-- Datas -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="cronograma_preventivo">Cronograma Preventivo</label>
+                                <input type="date" formControlName="cronograma_preventivo" id="cronograma_preventivo">
+                            </div>
+                            <div class="form-group">
+                                <label for="cronograma_preparacao">Cronograma Preparação</label>
+                                <input type="date" formControlName="cronograma_preparacao" id="cronograma_preparacao">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="cronograma_resposta">Cronograma Resposta</label>
+                                <input type="date" formControlName="cronograma_resposta" id="cronograma_resposta">
+                            </div>
+                            <div class="form-group">
+                                <label for="cronograma_recuperacao">Cronograma Recuperação</label>
+                                <input type="date" formControlName="cronograma_recuperacao" id="cronograma_recuperacao">
+                            </div>
+                        </div>
+
+                        <label><span class="campo-numero">10</span>Indicadores de Sucesso</label>
+                        <textarea formControlName="indicadores_sucesso" maxlength="1000"></textarea>
+
+                        <label><span class="campo-numero">11</span>Observações</label>
+                        <textarea formControlName="observacoes" maxlength="1000"></textarea>
+                    </div>
+                </p-tabPanel>
+
+            </p-tabView>
+        </form>
+        <div class="container-register">
+            <div class="form-group">
+                <div class="btn-toolbar ng-wizard-toolbar ng-wizard-toolbar-top justify-content-center">
+                    <div class="btn-group mr-2 ng-wizard-btn-group">
+                        <button type="button" class="btn btn-secondary ng-wizard-btn-prev">
+                            Cancelar
+                        </button>
+                        <button type="button" class="btn btn-dark ng-wizard-btn-next" (click)="updatePlan()">
+                            Salvar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,96 @@
+<div class="card-body">
+    <div class="container">
+        <div class="form form-label-right mb-4">
+            <p-panel header="Filtros" [toggleable]="true">
+                <form [formGroup]="filter_form">
+                    <div class="form-group row">
+                        <div class="col-lg-4 mb-4">
+                            <label class="text-dark-75 font-weight-bolder" for="nome_cenario">
+                                <strong>Nome do Cenário</strong>
+                            </label>
+                            <input type="text" class="form-control form-control-solid" name="nome_cenario"
+                                formControlName="nome_cenario" />
+                        </div>
+                        <div class="col-lg-4 mb-4">
+                            <label class="text-dark-75 font-weight-bolder" for="titulo">
+                                <strong>Municipio</strong>
+                            </label>
+                            <input type="text" class="form-control form-control-solid" name="municipio"
+                                formControlName="municipio" />
+                        </div>
+                        <div class="col-lg-4 mb-4">
+                            <label class="text-dark-75 font-weight-bolder" for="uf">
+                                <strong>Grau de Risco</strong>
+                            </label>
+                            <p-dropdown [options]="graus" [showClear]="false" [style]="{'width':'100%'}"
+                                formControlName="grau_risco"></p-dropdown>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-9 mb-2 mt-3">
+                            <button class="btn btn-sm btn-warning cursor-pointer" style="float: left;"
+                                (click)="listCenariosFilter(1)">
+                                <i class="text-white fa fa-search"></i>Pesquisar
+                            </button>
+                        </div>
+                        <div class="col-lg-3 mb-2 mt-3" style="display: flex;">
+                            <button class="btn btn-sm btn-warning cursor-pointer" style="float: left;"
+                                (click)="signPortal()">
+                                <i class="text-white fa fa-plus"></i>Novo Cenário
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </p-panel>
+        </div>
+    </div>
+    <div class="card">
+        <p-table [value]="cenarios" class="table" styleClass="p-datatable-responsive-demo">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width:100px">Nome do Cenário</th>
+                    <th style="width:100px">Componentes</th>
+                    <th style="width:100px">Descrição</th>
+                    <th style="width:100px">Data Criação</th>
+                    <th style="width:100px">Grau de Risco</th>
+                    <th style="width: 100px">Monitoramento</th>
+                    <th style="width: 100px">Resumo</th>
+                    <th style="width: 100px">Plano de Ação</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-cenario>
+                <tr>
+                    <td style="width:100px">{{ cenario.nome_cenario }}</td>
+                    <td style="width:100px">{{ cenario.componentes_criticos }}</td>
+                    <td style="width:100px">{{ cenario.descricao_cenario }}</td>
+                    <td style="width:100px">{{ cenario.criado_em | date: 'dd/MM/yyyy' }}</td>
+                    <td style="width:100px">{{ cenario.grau_risco }}</td>
+                    <td style="width:100px">{{ cenario.monitoramento }}</td>
+                    <td style="width:100px">{{ cenario.resumo_historico }}</td>
+                    <td><button class="btn btn-sm btn-success"
+                                (click)="openPlan(cenario.id_cenario)">
+                                <i class="text-white fa fa-plus"></i>
+                    </button></td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="6" class="text-center">Nenhum registro na lista.</td>
+                </tr>
+            </ng-template>5
+        </p-table>
+        <div class="card-footer">
+            <p-paginator (onPageChange)="onChangePage($event)" [rows]="pageSize" [totalRecords]="totalRecords"
+                [alwaysShow]="false" [showCurrentPageReport]="true"
+                currentPageReportTemplate="{totalRecords} registros"></p-paginator>
+        </div>
+    </div>
+</div>
+
+
+<ng-container *ngIf="isLoading$ | async"></ng-container>
+<div style="position: relative">
+    <ngx-spinner bdColor="rgba(255,255,255,0.25)" size="medium" color="#65b3f2" type="ball-clip-rotate"
+        [fullScreen]="true">
+    </ngx-spinner>
+</div>

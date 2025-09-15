@@ -1,0 +1,160 @@
+<ng-container *ngIf="isLoading$ | async"></ng-container>
+<div class="page-content">
+    <section class="row mt-1">
+        <!--GRAFICOS DE LINHAS-->
+        <!-- <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <h4 class="mt-3">Histórico Ano - <strong style="color: #3498DB;">Revisados</strong></h4>
+                    </div>
+                </div>
+                <ng-container *ngIf="isLoading$ | async"></ng-container>
+                <div class="card-body">
+                    <div class="col-xl-12">
+                        <ng-container>
+                            <highcharts-chart [Highcharts]="Highcharts" [options]="historicoAnoRevisados"
+                                style="width: 100%; height: 400px; display: block;">
+                            </highcharts-chart>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <h4 class="mt-3">Histórico Ano - <strong style="color: rgb(233, 98, 85);">NR</strong></h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="col-xl-12">
+                        <ng-container>
+                            <highcharts-chart [Highcharts]="Highcharts" [options]="historicoAnoNrs"
+                                style="width: 100%; height: 400px; display: block;">
+                            </highcharts-chart>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <div class="col-6 mt-10">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <h4 class="mt-3">Histórico do Mês - <strong style="color: #3498DB;">Revisados</strong></h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="col-xl-12">
+                        <ng-container>
+                            <highcharts-chart [Highcharts]="Highcharts" [options]="historicoMesRevisados"
+                                style="width: 100%; height: 400px; display: block;">
+                            </highcharts-chart>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 mt-10">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <h4 class="mt-3">Histórico do Mês - <strong style="color: rgb(233, 98, 85);">NR</strong>
+                        </h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="col-xl-12">
+                        <ng-container>
+                            <highcharts-chart [Highcharts]="Highcharts" [options]="historicoMesNrs"
+                                style="width: 100%; height: 400px; display: block;">
+                            </highcharts-chart>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 mt-10">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <h4 class="mt-3">Histórico do <strong style="color: #3498DB;">Ano</strong></h4>
+                    </div>
+                </div>
+                <div class="card-body-personalizado">
+                            <p-dropdown  [options]="months" optionLabel="month" optionValue="value" placeholder="Mês"
+                                (onChange)="selectMonth($event)"></p-dropdown>
+                    <div class="col-xl-12">
+                        <div class="col-xl-12">
+                            <p-chart type="doughnut" [data]="data" [style]="{'width': '10%'}"></p-chart>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 mt-10">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <h4 class="mt-3">Itens <strong style="color: #3498DB;">Revisados</strong> do Dia</h4>
+                    </div>
+                </div>
+                <div class="card-body-personalizado">
+                    <div class="col-xl-12">
+                        <div echarts [options]="optionRevisadosDia"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 mt-10">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <h4 class="mt-3">Itens <strong style="color: rgb(233, 98, 85);">NR</strong> do dia</h4>
+                    </div>
+                </div>
+                <div class="card-body-personalizado">
+                    <div class="col-xl-12">
+                        <div echarts [options]="optionNrDia"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 mt-10">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <h4 class="mt-3">Fila de <strong style="color: #3498DB;">Atividades</strong> do Dia</h4>
+                    </div>
+                </div>
+                <div class="card-body-personalizado">
+                    <div class="col-xl-12">
+                        <div echarts [options]="optionAtividadesDia"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 mt-10">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <h4 class="mt-3"><strong style="color: #3498DB;">Subsegmentos</strong> do Dia</h4>
+                    </div>
+                </div>
+                <div class="card-body-personalizado">
+                    <div class="col-xl-12">
+                        <div echarts [options]="optionSubsegmentoDia"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
+<div style="position: relative">
+    <ngx-spinner bdColor="rgba(255,255,255,0.25)" size="medium" color="#65b3f2" type="ball-clip-rotate"
+        [fullScreen]="true">
+    </ngx-spinner>
+  </div>

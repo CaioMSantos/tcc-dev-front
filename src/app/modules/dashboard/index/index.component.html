@@ -1,0 +1,44 @@
+<div class="dashboard-cards">
+  <div *ngFor="let card of cards" class="dashboard-card">
+    <i class="fa" [ngClass]="card.icon"></i>
+    <h3>{{card.value}}</h3>
+    <span>{{card.title}}</span>
+  </div>
+</div>
+
+<div class="dashboard-charts">
+  <div>
+    <h4>Evolução dos Incidentes</h4>
+    <canvas #evolucaoCanvas></canvas>
+  </div>
+  <div>
+    <h4>Status por Setor</h4>
+    <canvas #setorCanvas></canvas>
+  </div>
+  <div>
+    <h4>Status dos Alertas</h4>
+    <canvas #statusCanvas></canvas>
+  </div>
+</div>
+
+<div class="dashboard-main">
+  <div class="notifications">
+    <h4>Notificações</h4>
+    <ul>
+      <li *ngFor="let n of notifications">
+        <b>{{n.title}}</b> — {{n.text}} <span class="data">{{n.date}}</span>
+      </li>
+    </ul>
+  </div>
+  <div class="extra-panel">
+    <div class="atalhos">
+      <button class="btn btn-primary">Novo Cenário</button>
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- Debug na tela -->
+<pre *ngIf="cidade">{{ cidade | json }}</pre>

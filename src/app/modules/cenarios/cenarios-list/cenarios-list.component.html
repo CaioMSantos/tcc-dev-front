@@ -1,0 +1,92 @@
+<div class="card-body">
+    <div class="container">
+        <div class="form form-label-right mb-4">
+            <p-panel header="Filtros" [toggleable]="true">
+                <form [formGroup]="filter_form">
+                    <div class="form-group row">
+                        <div class="col-lg-4 mb-4">
+                            <label class="text-dark-75 font-weight-bolder" for="codigo">
+                                <strong>COBRADE</strong>
+                            </label>
+                            <input type="text" class="form-control form-control-solid" name="codigo"
+                                formControlName="codigo" />
+                        </div>
+                        <div class="col-lg-4 mb-4">
+                            <label class="text-dark-75 font-weight-bolder" for="municipio">
+                                <strong>Municipio</strong>
+                            </label>
+                            <input type="text" class="form-control form-control-solid" name="municipio"
+                                formControlName="municipio" />
+                        </div>
+                        <div class="col-lg-4 mb-4">
+                            <label class="text-dark-75 font-weight-bolder" for="uf">
+                                <strong>Estado</strong>
+                            </label>
+                            <p-dropdown [options]="states" [showClear]="false" [style]="{'width':'100%'}"
+                                formControlName="uf"></p-dropdown>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-9 mb-2 mt-3">
+                            <button class="btn btn-sm btn-warning cursor-pointer" style="float: left;"
+                                (click)="filterCenarios(1)">
+                                <i class="text-white fa fa-search"></i>Pesquisar
+                            </button>
+                        </div>
+                        <!-- <div class="col-lg-3 mb-2 mt-3" style="display: flex;">
+                            <button class="btn btn-sm btn-warning cursor-pointer" style="float: left;"
+                                (click)="signPortal()">
+                                <i class="text-white fa fa-plus"></i>Novo Cenário
+                            </button>
+                        </div> -->
+                    </div>
+                </form>
+            </p-panel>
+        </div>
+    </div>
+    <div class="card">
+        <p-table [value]="cenarios" class="table" styleClass="p-datatable-responsive-demo">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width:100px">Tipo</th>
+                    <th style="width:100px">Descrição</th>
+                    <th style="width:100px">Nivel de Risco</th>
+                    <th style="width:100px">Data Ocorrência</th>
+                    <th style="width: 100px">Municipio</th>
+                    <th style="width: 100px">Estado</th>
+                    <th style="width: 100px">Visualizar</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-cenario>
+                <tr>
+                    <td style="width:100px">{{ cenario.tipo }}</td>
+                    <td style="width:100px">{{ cenario.descricao }}</td>
+                    <td style="width:100px">{{ cenario.nivel_risco }}</td>
+                    <!-- <td style="width:100px">{{ user.createdDate | date: 'dd/MM/yyyy' }}</td> -->
+                    <td style="width:100px">{{ cenario.data_ocorrencia | date: 'dd/MM/yyyy' }}</td>
+                    <td style="width:100px">{{ cenario.municipio }}</td>
+                    <td style="width:100px">{{ cenario.uf }}</td>
+                    <td></td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="6" class="text-center">Nenhum registro na lista.</td>
+                </tr>
+            </ng-template>5
+        </p-table>
+        <div class="card-footer">
+            <p-paginator (onPageChange)="onChangePage($event)" [rows]="pageSize" [totalRecords]="totalRecords"
+                [alwaysShow]="false" [showCurrentPageReport]="true"
+                currentPageReportTemplate="{totalRecords} registros"></p-paginator>
+        </div>
+    </div>
+</div>
+
+
+<ng-container *ngIf="isLoading$ | async"></ng-container>
+<div style="position: relative">
+    <ngx-spinner bdColor="rgba(255,255,255,0.25)" size="medium" color="#65b3f2" type="ball-clip-rotate"
+        [fullScreen]="true">
+    </ngx-spinner>
+</div>
